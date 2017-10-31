@@ -25,9 +25,9 @@ class debug_report(models.Model):
 
 	@api.model_cr
 	def init(self):
-		tools.drop_view_if_exists(self._cr, 'fortest_debug_report_aa')
+		tools.drop_view_if_exists(self._cr, 'fortest_debug_report')
 		self._cr.execute("""
-			CREATE OR REPLACE VIEW fortest_debug_report_aa AS (
+			CREATE OR REPLACE VIEW fortest_debug_report AS (
 				SELECT
 					dash.id as id,
 					sum(dash.value) as value,

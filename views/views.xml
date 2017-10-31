@@ -54,7 +54,7 @@
         <field name="arch" type="xml">
             <pivot>
                 <field type="col" name="value" string="Valeur" />
-                <field type="measure" name="count_name" string="Nombre" />
+                <field type="col" name="count_name" string="Nombre" />
                 <field type="row" name="state" string="Etat" />
             </pivot>
         </field>
