@@ -1,15 +1,42 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api
+from odoo import models, fields, api, tools
 
-# class debug_dashboard(models.Model):
-#     _name = 'debug_dashboard.debug_dashboard'
+class debug_dashboard(models.Model):
+    _name = 'debug.dashboard'
 
-#     name = fields.Char()
-#     value = fields.Integer()
-#     value2 = fields.Float(compute="_value_pc", store=True)
-#     description = fields.Text()
-#
-#     @api.depends('value')
-#     def _value_pc(self):
-#         self.value2 = float(self.value) / 100
+    name = fields.Char(string="Description")
+    value = fields.Float(string="Value")
+    state = fields.Selection([('new','New'),('opened','Opened'),('closed','Closed')],default="new")
+
+    def to_opened(self):
+    	self.state = 'opened'
+
+    def to_closed(self):
+    	self.state = 'closed'
+
+class debug_report(models.Model):
+	_name = 'fortest.debug.report'
+	_auto = False
+
+	value = fields.Float(string="Value")
+	state = fields.Selection([('new','New'),('opened','Opened'),('closed','Closed')])
+	count_name = fields.Integer(string="Count")
+
+	@api.model_cr
+	def init(self):
+		tools.drop_view_if_exists(self._cr, 'fortest_debug_report_aa')
+		self._cr.execute("""
+			CREATE OR REPLACE VIEW fortest_debug_report_aa AS (
+				SELECT
+					dash.id as id,
+					sum(dash.value) as value,
+					count(dash.name) as count_name,
+					dash.state as state
+				FROM
+					debug_dashboard dash		
+				GROUP BY
+					dash.id,
+					dash.value,
+					dash.name,
+					dash.state )""")

@@ -7,7 +7,7 @@
         subtitle on modules listing or apps.openerp.com""",
 
     'description': """
-        Long description of module's purpose
+        Test Dashboard Odoo 10 Enterprise
     """,
 
     'author': "My Company",
@@ -20,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base','board'],
 
     # always loaded
     'data': [
@@ -32,4 +32,5 @@
     'demo': [
         'demo/demo.xml',
     ],
+    'application':True,
 }
